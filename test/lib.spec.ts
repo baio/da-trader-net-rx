@@ -31,7 +31,7 @@ describe("tests traderNetRx",  () => {
 		})																															
 	})
 	
-	it.only("get quotes",  (done) => {
+	it("get quotes",  (done) => {
 		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
 		var opts : traderNetRx.ITraderNetAuth = {
 			apiKey: TRADER_NET_API_KEY,
@@ -52,6 +52,22 @@ describe("tests traderNetRx",  () => {
 			disposable = tn.startRecieveQuotes(["SBER"]); 					
 		})									
 																								
-	})		
-		
+	})
+	
+	it("start get quotes and then stop immediately",  (done) => {
+		//this.timeout(2000 + 100);
+		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
+		var opts : traderNetRx.ITraderNetAuth = {
+			apiKey: TRADER_NET_API_KEY,
+			securityKey: TRADER_NET_SEC_KEY 
+		}			
+		tn.connect(opts).subscribe(res => {
+			tn.quotesStream.subscribe(res => {
+				done(new Error('Unexpected Call')); 
+			});
+			var disposable = tn.startRecieveQuotes(["SBER"]);
+			disposable.dispose(); 					
+			setTimeout(() => done(), 1500);
+		})																																	
+	})					
 }) 
