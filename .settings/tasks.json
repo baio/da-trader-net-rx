@@ -46,7 +46,12 @@
 			"showOutput": "always",
 			// Use the standard less compilation problem matcher.
 			"problemMatcher": "$gulp-tsc"
-		}
+		},
+	    {
+	      "taskName": "test",
+	      "isTestCommand": true,
+		  "showOutput": "always"
+	    }	
 	]
 }
 

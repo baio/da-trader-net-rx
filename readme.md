@@ -46,13 +46,14 @@ If wanna use with `travis` don't forgate to add service to `services` in
 
 Project contians `tasks` file for Visual Studio Code
 
-+ Build - run `tsc`, same as `npm run-task build`
-+ Test - run `mocha`, same as `npm test`
++ Build - run `build:module`, same as `npm run-task build`
++ Test - run `mocha`, same as `npm test`, same as `gulp test`
++ Watch build `gulp`
 
 For some reason VS Code take quite a time to start build,
-usually watch rebuild proccess via `tsc -w` work much faster.
+usually watch rebuild proccess via `gulp` work much faster.
 
-This way use `tsc -w` in console and then run test task manually,
+This way use `gulp` in console and then run test task manually,
 when neccessary.   
 
 ## Documentation 

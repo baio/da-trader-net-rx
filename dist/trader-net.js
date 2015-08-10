@@ -2,7 +2,6 @@
 var Rx = require("rx");
 var io = require("socket.io-client");
 var security = require("./crypto");
-var sign = security.sign;
 var TraderNet = (function () {
     function TraderNet(url) {
         this.url = url;
@@ -16,8 +15,8 @@ var TraderNet = (function () {
                 cmd: 'getAuthInfo',
                 nonce: Date.now()
             };
-            var sig = sign(authData, auth.securityKey);
-            return Rx.Observable.fromCallback(ws.emit, ws)('auth', authData, sig);
+            var sign = security.sign(authData, auth.securityKey);
+            return Rx.Observable.fromCallback(ws.emit, ws)('auth', authData, sign);
         });
     };
     return TraderNet;

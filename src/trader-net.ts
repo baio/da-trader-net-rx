@@ -6,8 +6,7 @@ import types = require("./types");
 
 import ITraderNetAuth = types.ITraderNetAuth;
 import ITraderNetAuthResult = types.ITraderNetAuthResult;
-import sign = security.sign; 
-
+ 
 export class TraderNet {
     
     private ws:SocketIOClient.Socket;
@@ -24,8 +23,8 @@ export class TraderNet {
                 cmd: 'getAuthInfo',
                 nonce: Date.now()
             };
-            var sig = sign(authData, auth.securityKey);
-            return Rx.Observable.fromCallback<ITraderNetAuthResult>(ws.emit, ws)('auth', authData, sig);                 
+            var sign = security.sign(authData, auth.securityKey);
+            return Rx.Observable.fromCallback<ITraderNetAuthResult>(ws.emit, ws)('auth', authData, sign);                 
         });            
     }           
 }

@@ -4,6 +4,7 @@ var concat = require('gulp-concat');
 var replace = require('gulp-replace'); 
 var merge = require('merge2');
 var fs = require('fs');
+var mocha = require('gulp-spawn-mocha');
 
 var tsProjectJs = ts.createProject('tsconfig.json', { sortOutput: true });
 //if use same project exception thrown on task
@@ -46,3 +47,14 @@ gulp.task('build:module', ['build'], function() {
     .pipe(gulp.dest('dist'));
     
 })
+
+
+gulp.task('default', ['build:module'], function() {
+  gulp.watch("src/**.ts", ['build:module']);
+});
+
+
+gulp.task('test',  function () {
+    return gulp.src('test/**.js')
+        .pipe(mocha());
+});

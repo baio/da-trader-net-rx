@@ -1,5 +1,5 @@
 /// <reference path="../typings/tsd.d.ts"/>
-/// <reference path="../dist/typings/index.d.ts"/>
+/// <reference path="../dist/index.d.ts"/>
 import chai = require('chai'); 
 import traderNetRx = require('../dist/index');
 var expect = chai.expect;
