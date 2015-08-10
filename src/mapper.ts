@@ -1,15 +1,21 @@
-/** 
 import ticketCodes = require("./enums/ticket-codes");
 import currencyCodes = require("./enums/currency-codes");
 import orderCodes = require("./enums/order-codes");
-import types = require("./trader-net-types");
-*/
- 
-///<refernce path="types.d.ts" />
+import types = require("./types");
 
-import utils = require("./trader-utils");
+import utils = require("./utils");
+
+import IPutOrderData = types.IPutOrderData;
+import ITraderNetPutOrderData = types.ITraderNetPutOrderData;
+import BookOrderActions = types.BookOrderActions;
+import IBookOrder = types.IBookOrder;
+import ITraderNetPortfolio = types.ITraderNetPortfolio;
+import IOrder = types.IOrder;
+import ITraderNetAccount = types.ITraderNetAccount;
+import ITraderNetPosition = types.ITraderNetPosition;
+import ITraderNetQuote = types.ITraderNetQuote;
     
-export function formatPutOrder(data:IPutOrderData):types.ITraderNetPutOrderData {
+export function formatPutOrder(data: IPutOrderData):ITraderNetPutOrderData {
     return {
         instr_name: utils.getCodes([data.ticket])[0],
         action_id: data.action,
@@ -28,7 +34,7 @@ export function formatPutOrder(data:IPutOrderData):types.ITraderNetPutOrderData 
     };
 }
 
-export function mapPortfolio(servicePortfolio:any):types.ITraderNetPortfolio {
+export function mapPortfolio(servicePortfolio:any):ITraderNetPortfolio {
 
     return {
         key: servicePortfolio.key,
@@ -37,7 +43,7 @@ export function mapPortfolio(servicePortfolio:any):types.ITraderNetPortfolio {
     }
 }
 
-function mapOrderBookItem(ticket: string, action: types.BookOrderActions, orderBookItem:any):types.IBookOrder {
+function mapOrderBookItem(ticket: string, action: BookOrderActions, orderBookItem:any):IBookOrder {
     return {
         index: orderBookItem.k,
         ticket: ticketCodes.TicketCodes[ticket],
@@ -48,7 +54,7 @@ function mapOrderBookItem(ticket: string, action: types.BookOrderActions, orderB
     };
 }
 
-export function mapOrderBook(orderBook:any):Array<types.IBookOrder> {
+export function mapOrderBook(orderBook:any):Array<IBookOrder> {
     //https://github.com/tradernet/tn.api#notifyOrderBook
     var res = orderBook.dom.map ((m: any) => {
         var ins = m.ins.map(x =>
@@ -65,7 +71,7 @@ export function mapOrderBook(orderBook:any):Array<types.IBookOrder> {
     return  [].concat.apply([],res);
 }
 
-export function mapOrder(tnOrder:any):types.IOrder {
+export function mapOrder(tnOrder:any):IOrder {
     return <types.IOrder>{
         id: tnOrder.id,
         date: tnOrder.date,
@@ -90,7 +96,7 @@ export function mapOrder(tnOrder:any):types.IOrder {
     }
 }
 
-function mapAccount(serviceAccount:any):types.ITraderNetAccount {
+function mapAccount(serviceAccount:any):ITraderNetAccount {
     return {
         availableAmount: serviceAccount.s,
         currency: <any>currencyCodes.CurrencyCodes[serviceAccount.curr],
@@ -100,7 +106,7 @@ function mapAccount(serviceAccount:any):types.ITraderNetAccount {
     }
 }
 
-function mapPosition(servicePos:any):types.ITraderNetPosition {
+function mapPosition(servicePos:any):ITraderNetPosition {
     return {
         security: <any>ticketCodes.TicketCodes[servicePos.i],
         securityType: servicePos.t,
@@ -116,7 +122,7 @@ function mapPosition(servicePos:any):types.ITraderNetPosition {
     }
 }
 
-export function mapQuotes(serviceQuote:any):types.ITraderNetQuote {
+function mapQuote(serviceQuote:any):ITraderNetQuote {
     return {
         security: <any>ticketCodes.TicketCodes[serviceQuote.c],
         ticket: <string>serviceQuote.c,
@@ -125,6 +131,10 @@ export function mapQuotes(serviceQuote:any):types.ITraderNetQuote {
         ask: serviceQuote.bap,
         bid: serviceQuote.bbp
     };
+}
+
+export function mapQuotes(serviceQuotes:any):ITraderNetQuote[] {
+    return serviceQuotes.q.map(mapQuote);
 }
 
 

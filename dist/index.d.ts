@@ -511,14 +511,41 @@ export interface ITraderNetQuote {
 
 
 
+export interface ISecurity {
+    ticket: TicketCodes;
+    code: string;
+    lotSize: number;
+}
+export function getSecurity(code: TicketCodes): ISecurity;
+export function getSecurities(): Array<ISecurity>;
+export function getCodes(tickets: Array<TicketCodes | string>, sort?: boolean): Array<string>;
+
+
+
+
+
+
+
+
+export function formatPutOrder(data: IPutOrderData): ITraderNetPutOrderData;
+export function mapPortfolio(servicePortfolio: any): ITraderNetPortfolio;
+export function mapOrderBook(orderBook: any): Array<IBookOrder>;
+export function mapOrder(tnOrder: any): IOrder;
+export function mapQuotes(serviceQuotes: any): ITraderNetQuote[];
+
+
+
+
 
 
 
 export class TraderNet {
     private url;
     private ws;
+    quotesStream: Rx.Observable<ITraderNetQuote[]>;
     constructor(url: string);
     connect(auth: ITraderNetAuth): Rx.Observable<ITraderNetAuthResult>;
+    startRecieveQuotes(quotes: string[]): Rx.IDisposable;
     disconnect(): void;
 }
 

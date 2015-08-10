@@ -29,5 +29,29 @@ describe("tests traderNetRx",  () => {
 			tn.disconnect();
 			done();	
 		})																															
+	})
+	
+	it.only("get quotes",  (done) => {
+		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
+		var opts : traderNetRx.ITraderNetAuth = {
+			apiKey: TRADER_NET_API_KEY,
+			securityKey: TRADER_NET_SEC_KEY 
+		}			
+		tn.connect(opts).subscribe(res => {
+			var disposable: Rx.IDisposable;
+			tn.quotesStream.subscribe(res => { 
+				expect(res).has.lengthOf(1);
+				expect(res[0]).has.property("security", 230);
+				expect(res[0]).has.property("ticket", "SBER");
+				expect(res[0]).has.property("lot");
+				expect(res[0]).has.property("ask");
+				expect(res[0]).has.property("bid");
+				disposable.dispose();
+				done();				
+			});
+			disposable = tn.startRecieveQuotes(["SBER"]); 					
+		})									
+																								
 	})		
+		
 }) 
