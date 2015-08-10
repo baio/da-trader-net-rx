@@ -23,6 +23,7 @@ Customized build proccess
 	+ Remove all `///<reference ...` tags from output
 + Build type definition file from template
 	+ Build definition files as is
+	+ Concatenate them all in single file
 	+ Remove all `///<reference ...` tags and `import` from output
 	+ Insert output entry into template `index.tmpl.d.ts` file 
 	+ Replace `declare export ...` to `export ...`
