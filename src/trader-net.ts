@@ -24,9 +24,18 @@ export class TraderNet {
                 nonce: Date.now()
             };
             var sign = security.sign(authData, auth.securityKey);
-            return Rx.Observable.fromCallback<ITraderNetAuthResult>(ws.emit, ws)('auth', authData, sign);                 
-        });            
+            return Rx.Observable.fromNodeCallback<ITraderNetAuthResult>(ws.emit, ws)('auth', authData, sign);                 
+        })
+        .do(_ => this.ws = ws);            
+    }
+    
+    disconnect(): void {            
+        if (!this.ws)
+            throw "Not connected";
+        this.ws.disconnect();
+        this.ws = null;
     }           
+           
 }
 
 

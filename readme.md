@@ -30,8 +30,8 @@ Customized build proccess
 
 ## Test
 
-Set up uri for test db 
-
+Set up uri for test db
+ 
 + In `.npmrc` set `SOME_URI=xxx`, higest priority
 + In `package.json` field `config.SOME_URI`
 

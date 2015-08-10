@@ -11,8 +11,8 @@
   },
   "config": {},
   "scripts": {
-    "build": "tsc",
-    "test": "mocha"
+    "build": "gulp build:module",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",

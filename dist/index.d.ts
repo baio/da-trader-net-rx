@@ -519,6 +519,7 @@ export class TraderNet {
     private ws;
     constructor(url: string);
     connect(auth: ITraderNetAuth): Rx.Observable<ITraderNetAuthResult>;
+    disconnect(): void;
 }
 
 	
