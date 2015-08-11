@@ -25,11 +25,11 @@ export class TraderNet {
     */ 
     public quotesStream: Rx.Observable<ITraderNetQuote[]>;
     /**
-     * Stream of orders
+     * Stream of orders.
      */ 
     public ordersStream: Rx.Observable<IOrder[]>;
     /**
-     * Stream of changes in portfolio
+     * Stream of changes in portfolio.
      */
     public portfolioStream: Rx.Observable<ITraderNetPortfolio>;
 
@@ -48,7 +48,7 @@ export class TraderNet {
     }
 
     /**
-     * Connect to trdaer-net service
+     * Connect to trdaer-net service.
      */
     connect(auth:ITraderNetAuth): Rx.Observable<ITraderNetAuthResult> {
         this.ws.connect();            
@@ -66,7 +66,7 @@ export class TraderNet {
     
     /**
      * Starts recieve quotes.
-     * Yoy should be subscribed on quotesStream 
+     * Yoy should be subscribed on quotesStream. 
      * @params
      * quotes
      * Ticket name, example: SBER
@@ -81,7 +81,7 @@ export class TraderNet {
     /**
      * Starts recieve orders.
      * Yoy should be subscribed on ordersStream. 
-     * Needs to be invoked after connection (authorization)
+     * Needs to be invoked after connection (authorization).
      * return
      * IDisposable - allow stop recieve oredrs
      */
@@ -92,8 +92,8 @@ export class TraderNet {
     
     /**
      * Starts recieve portfolio changes.
-     * Yoy should be subscribed on portfolioStream
-     * Needs to be invoked after connection (authorization)  
+     * Yoy should be subscribed on portfolioStream.
+     * Needs to be invoked after connection (authorization) . 
      * @params
      * return
      * IDisposable - allow stop recieve portfolio changes
