@@ -23,11 +23,12 @@ function formatPutOrder(data) {
 }
 exports.formatPutOrder = formatPutOrder;
 function mapPortfolio(servicePortfolio) {
-    var portf = servicePortfolio[0].ps;
+    var pos = servicePortfolio.filter(function (f) { return f.ps.pos.length > 0; })[0];
+    var acc = servicePortfolio.filter(function (f) { return f.ps.acc.length > 0; })[0];
     return {
-        key: portf.key,
-        accounts: portf.acc.map(mapAccount),
-        positions: portf.pos.map(mapPosition)
+        key: undefined,
+        accounts: acc ? acc.ps.acc.map(mapAccount) : [],
+        positions: pos ? pos.ps.pos.map(mapPosition) : []
     };
 }
 exports.mapPortfolio = mapPortfolio;

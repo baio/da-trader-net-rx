@@ -72,7 +72,7 @@ describe("tests traderNetRx",  () => {
 		})																																	
 	})
 	
-	it.only("put order buy / sell and wotch portfolio",  (done) => {
+	it("put order buy / sell and watch portfolio",  (done) => {
 		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
 		var opts : traderNetRx.ITraderNetAuth = {
 			apiKey: TRADER_NET_API_KEY,
@@ -96,10 +96,10 @@ describe("tests traderNetRx",  () => {
 			
 		});
 		
-		tn.portfolioStream.skip(1).subscribe(res => {
+		tn.portfolioStream.skip(1).take(1).subscribe(res => {						
 			expect(res).has.property("accounts");
 			expect(res).has.property("positions");
-			//expect(res.accounts).has.lengthOf(1);
+			expect(res.accounts).has.length.most(1).least(0);//wtf
 			expect(res.positions).has.lengthOf(1);
 			expect(res.positions[0]).has.property("security", 230);
 			expect(res.positions[0]).has.property("securityType", 1);
@@ -113,18 +113,19 @@ describe("tests traderNetRx",  () => {
 			expect(res.positions[0]).has.property("openPrice");
 			expect(res.positions[0]).has.property("marketPrice");
 			
-			order.action = traderNetRx.OrderActionTypes.Sell; 			
+			order.action = traderNetRx.OrderActionTypes.Sell;
+			order.quantity = res.positions[0].quantity;  			
 			tn.putOrder(order);
 		});
 		
-		tn.portfolioStream.skip(2).subscribe(res => {
-			//expect(res).has.property("accounts");
+		tn.portfolioStream.skip(2).take(1).subscribe(res => {
+			expect(res).has.property("accounts");
 			expect(res).has.property("positions");
 			expect(res.accounts).has.lengthOf(1);
 			expect(res.positions).has.lengthOf(0);
 			done();
-		});		
-						 																																						
+		});
+												 																																						
 	})					
 					
 }) 

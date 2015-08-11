@@ -29,8 +29,9 @@ export class TraderNet {
         this.ordersStream = Rx.Observable.fromEventPattern<any>((h) => this.ws.on("orders", h), (h) => this.ws.off("orders", h))
         .map(mapper.mapOrders);
         
-        this.portfolioStream = Rx.Observable.fromEventPattern<any>((h) => this.ws.on("portfolio", h), (h) => this.ws.off("portfolio", h))
-        .map(mapper.mapPortfolio);
+        this.portfolioStream = Rx.Observable.fromEventPattern<any>(
+            (h) => this.ws.on("portfolio", h), (h) => this.ws.off("portfolio", h))
+            .map(mapper.mapPortfolio);
     }
 
     connect(auth:ITraderNetAuth): Rx.Observable<ITraderNetAuthResult> {
