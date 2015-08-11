@@ -1,0 +1,12 @@
+import types = require("./types");
+import IPutOrderData = types.IPutOrderData;
+import ITraderNetPutOrderData = types.ITraderNetPutOrderData;
+import IBookOrder = types.IBookOrder;
+import ITraderNetPortfolio = types.ITraderNetPortfolio;
+import IOrder = types.IOrder;
+import ITraderNetQuote = types.ITraderNetQuote;
+export declare function formatPutOrder(data: IPutOrderData): ITraderNetPutOrderData;
+export declare function mapPortfolio(servicePortfolio: any): ITraderNetPortfolio;
+export declare function mapOrderBook(orderBook: any): Array<IBookOrder>;
+export declare function mapOrders(tnOrders: any): IOrder[];
+export declare function mapQuotes(serviceQuotes: any): ITraderNetQuote[];

@@ -7,7 +7,7 @@ import currencyCodes = require("./enums/currency-codes");
 import orderCodes = require("./enums/order-codes");
 import securityTypes = require("./enums/security-types");
 
-module TraderNetRx {
+module traderNetRx {
 	export var TraderNet = traderNet.TraderNet; 	
 	export var TicketCodes = ticketCodes.TicketCodes;
 	export var CurrencyCodes = currencyCodes.CurrencyCodes;
@@ -20,6 +20,4 @@ module TraderNetRx {
 	export var getSecurity = utils.getSecurity;
 }
 
-
-
-export = TraderNetRx;
+export = traderNetRx;
