@@ -560,6 +560,8 @@ export class TraderNet {
 	
 } 
 
-export = tradeNextRx;
+declare module "da-trader-net-rx" {
+    export = tradeNextRx;
+}
 
  

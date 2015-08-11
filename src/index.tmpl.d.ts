@@ -6,6 +6,8 @@ declare module tradeNextRx {
 	//	
 } 
 
-export = tradeNextRx;
+declare module "da-trader-net-rx" {
+    export = tradeNextRx;
+}
 
  
