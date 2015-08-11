@@ -1,5 +1,7 @@
 import Rx = require("rx");
 
-export module tradeNextRx {
+declare module tradeNextRx {
 	//	
 } 
+
+export = tradeNextRx;

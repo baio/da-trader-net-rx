@@ -1,6 +1,6 @@
 import Rx = require("rx");
 
-export module tradeNextRx {
+declare module tradeNextRx {
 	
 export var sign: (data: any, apiSec: any) => any;
 
@@ -557,3 +557,5 @@ export class TraderNet {
 
 	
 } 
+
+export = tradeNextRx;
