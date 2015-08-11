@@ -99,6 +99,7 @@
 					<li>In <code>package.json</code> field <code>config.SOME_URI</code></li>
 				</ul>
 				<p>Run test</p>
+				<p>Test must be run on empty trader-net account (no pervious trades)</p>
 				<p><code>npm test</code></p>
 				<p>If wanna use with <code>travis</code> don&#39;t forgate to add service to <code>services</code> in
 				<code>.travis.yml</code> file.</p>
@@ -114,7 +115,7 @@
 				<p>This way use <code>gulp</code> in console and then run test task manually,
 				when neccessary.   </p>
 				<h2 id="documentation">Documentation</h2>
-				<p>Generate <code>typedoc ./src/index.ts</code> </p>
+				<p>Generate <code>typedoc ./src/**.ts ./src/**/**.ts</code> </p>
 				<p>To publish docs  on <code>github</code></p>
 				<pre><code>git checkout <span class="hljs-comment">--orphan gh-pages</span>
 git <span class="hljs-built_in">add</span> <span class="hljs-comment">--all .</span>
