@@ -8,18 +8,24 @@ import mapper = require("./mapper");
 import ITraderNetAuth = types.ITraderNetAuth;
 import ITraderNetAuthResult = types.ITraderNetAuthResult;
 import ITraderNetQuote = types.ITraderNetQuote;
-
+import IPutOrderData = types.IPutOrderData;
+import IOrder = types.IOrder;
  
 export class TraderNet {
     
     private ws:SocketIOClient.Socket;
     
     public quotesStream: Rx.Observable<ITraderNetQuote[]>; 
+    public ordersStream: Rx.Observable<IOrder[]>;
 
     constructor(private url:string) {
         this.ws = io(this.url, {transports: ['websocket'], forceNew: true, autoConnect : false});        
+        
         this.quotesStream = Rx.Observable.fromCallback<any>(this.ws.on, this.ws)("q")
-        .map(mapper.mapQuotes);                
+        .map(mapper.mapQuotes);
+        
+        this.ordersStream = Rx.Observable.fromCallback<any>(this.ws.on, this.ws)("orders")
+        .map(mapper.mapOrders);                
     }
 
     connect(auth:ITraderNetAuth): Rx.Observable<ITraderNetAuthResult> {
@@ -41,6 +47,15 @@ export class TraderNet {
         return Rx.Disposable.create(() => emitor.close());        
     }
 
+    startRecieveOrders() : Rx.IDisposable {        
+        var emitor = this.ws.emit('notifyOrders');
+        return Rx.Disposable.create(() => emitor.close());        
+    }
+    
+    putOrder(data: IPutOrderData): Rx.IDisposable {
+        var emitor = this.ws.emit('putOrder', mapper.formatPutOrder(data));                
+        return Rx.Disposable.create(() => emitor.close());
+    }
            
     disconnect(): void {            
         this.ws.disconnect();

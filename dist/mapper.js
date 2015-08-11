@@ -80,7 +80,10 @@ function mapOrder(tnOrder) {
         userOrderId: tnOrder.userOrderId
     };
 }
-exports.mapOrder = mapOrder;
+function mapOrders(tnOrders) {
+    return tnOrders[0].orders.order.map(mapOrder);
+}
+exports.mapOrders = mapOrders;
 function mapAccount(serviceAccount) {
     return {
         availableAmount: serviceAccount.s,

@@ -71,7 +71,7 @@ export function mapOrderBook(orderBook:any):Array<IBookOrder> {
     return  [].concat.apply([],res);
 }
 
-export function mapOrder(tnOrder:any):IOrder {
+function mapOrder(tnOrder:any):IOrder {
     return <types.IOrder>{
         id: tnOrder.id,
         date: tnOrder.date,
@@ -94,6 +94,10 @@ export function mapOrder(tnOrder:any):IOrder {
         stat_prev: tnOrder.stat_prev,
         userOrderId: tnOrder.userOrderId
     }
+}
+
+export function mapOrders(tnOrders: any) : IOrder[] {
+    return tnOrders[0].orders.order.map(mapOrder);    
 }
 
 function mapAccount(serviceAccount:any):ITraderNetAccount {

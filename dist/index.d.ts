@@ -530,8 +530,10 @@ export function getCodes(tickets: Array<TicketCodes | string>, sort?: boolean): 
 export function formatPutOrder(data: IPutOrderData): ITraderNetPutOrderData;
 export function mapPortfolio(servicePortfolio: any): ITraderNetPortfolio;
 export function mapOrderBook(orderBook: any): Array<IBookOrder>;
-export function mapOrder(tnOrder: any): IOrder;
+export function mapOrders(tnOrders: any): IOrder[];
 export function mapQuotes(serviceQuotes: any): ITraderNetQuote[];
+
+
 
 
 
@@ -543,9 +545,12 @@ export class TraderNet {
     private url;
     private ws;
     quotesStream: Rx.Observable<ITraderNetQuote[]>;
+    ordersStream: Rx.Observable<IOrder[]>;
     constructor(url: string);
     connect(auth: ITraderNetAuth): Rx.Observable<ITraderNetAuthResult>;
     startRecieveQuotes(quotes: string[]): Rx.IDisposable;
+    startRecieveOrders(): Rx.IDisposable;
+    putOrder(data: IPutOrderData): Rx.IDisposable;
     disconnect(): void;
 }
 

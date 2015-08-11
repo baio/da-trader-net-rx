@@ -38,18 +38,19 @@ describe("tests traderNetRx",  () => {
 			securityKey: TRADER_NET_SEC_KEY 
 		}			
 		tn.connect(opts).subscribe(res => {
-			var disposable: Rx.IDisposable;
-			tn.quotesStream.subscribe(res => { 
-				expect(res).has.lengthOf(1);
-				expect(res[0]).has.property("security", 230);
-				expect(res[0]).has.property("ticket", "SBER");
-				expect(res[0]).has.property("lot");
-				expect(res[0]).has.property("ask");
-				expect(res[0]).has.property("bid");
-				disposable.dispose();
-				done();				
-			});
-			disposable = tn.startRecieveQuotes(["SBER"]); 					
+			console.log("connection success");	
+		});
+		var disposable = tn.startRecieveQuotes(["SBER"]);
+		tn.quotesStream.subscribe(res => { 
+			expect(res).has.lengthOf(1);
+			expect(res[0]).has.property("security", 230);
+			expect(res[0]).has.property("ticket", "SBER");
+			expect(res[0]).has.property("lot");
+			expect(res[0]).has.property("ask");
+			expect(res[0]).has.property("bid");
+			disposable.dispose();
+			done();				
+			 					
 		})									
 																								
 	})
@@ -69,5 +70,37 @@ describe("tests traderNetRx",  () => {
 			disposable.dispose(); 					
 			setTimeout(() => done(), 1500);
 		})																																	
+	})
+	
+	it.only("put order",  (done) => {
+		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
+		var opts : traderNetRx.ITraderNetAuth = {
+			apiKey: TRADER_NET_API_KEY,
+			securityKey: TRADER_NET_SEC_KEY 
+		}			
+		
+		var order: traderNetRx.IPutOrderData = {
+			ticket: "SBER",
+			action: traderNetRx.OrderActionTypes.Buy,
+			orderType: traderNetRx.OrderTypes.Market,
+			currency: traderNetRx.CurrencyCodes.RUR,
+			quantity: traderNetRx.getSecurity(traderNetRx.TicketCodes.SBER).lotSize
+		};
+		
+		tn.connect(opts).subscribe(res => {
+			console.log("connection success");
+			tn.putOrder(order);
+			//done();
+		});
+		
+		
+		tn.ordersStream.subscribe(res => {
+			console.log("order !!!", res)
+		});
+		
+		
+		tn.startRecieveOrders();
+		 																																						
 	})					
+					
 }) 

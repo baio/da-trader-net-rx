@@ -1,5 +1,6 @@
 
 var traderNet = require("./trader-net");
+var utils = require("./utils");
 var ticketCodes = require("./enums/ticket-codes");
 var currencyCodes = require("./enums/currency-codes");
 var orderCodes = require("./enums/order-codes");
@@ -15,5 +16,6 @@ var TraderNetRx;
     TraderNetRx.OrderActionTypes = orderCodes.OrderActionTypes;
     TraderNetRx.SecurityType = securityTypes.SecurityType;
     TraderNetRx.SecurityKind = securityTypes.SecurityKind;
+    TraderNetRx.getSecurity = utils.getSecurity;
 })(TraderNetRx || (TraderNetRx = {}));
 module.exports = TraderNetRx;

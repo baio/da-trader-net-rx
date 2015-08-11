@@ -1,8 +1,8 @@
 var ticketCodes = require("./enums/ticket-codes");
 var TicketCodes = ticketCodes.TicketCodes;
+var SEC_LIST = require("../data/SEC_LIST_190315.json");
 function getSecurity(code) {
-    var securities = require("./data/MX-TQBR-190315.json");
-    var seq = securities[TicketCodes[code]];
+    var seq = SEC_LIST[TicketCodes[code]];
     if (!seq)
         throw new Error("Code not found");
     return {
@@ -11,12 +11,11 @@ function getSecurity(code) {
 }
 exports.getSecurity = getSecurity;
 function getSecurities() {
-    var securities = require("../data/MX-TQBR-190315.json");
-    return Object.keys(securities).map(function (key) {
+    return Object.keys(SEC_LIST).map(function (key) {
         return {
             ticket: TicketCodes[key],
             code: key,
-            lotSize: securities[key]
+            lotSize: SEC_LIST[key]
         };
     });
 }

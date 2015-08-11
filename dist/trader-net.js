@@ -9,6 +9,8 @@ var TraderNet = (function () {
         this.ws = io(this.url, { transports: ['websocket'], forceNew: true, autoConnect: false });
         this.quotesStream = Rx.Observable.fromCallback(this.ws.on, this.ws)("q")
             .map(mapper.mapQuotes);
+        this.ordersStream = Rx.Observable.fromCallback(this.ws.on, this.ws)("orders")
+            .map(mapper.mapOrders);
     }
     TraderNet.prototype.connect = function (auth) {
         var _this = this;
@@ -26,6 +28,14 @@ var TraderNet = (function () {
     };
     TraderNet.prototype.startRecieveQuotes = function (quotes) {
         var emitor = this.ws.emit('notifyQuotes', quotes);
+        return Rx.Disposable.create(function () { return emitor.close(); });
+    };
+    TraderNet.prototype.startRecieveOrders = function () {
+        var emitor = this.ws.emit('notifyOrders');
+        return Rx.Disposable.create(function () { return emitor.close(); });
+    };
+    TraderNet.prototype.putOrder = function (data) {
+        var emitor = this.ws.emit('putOrder', mapper.formatPutOrder(data));
         return Rx.Disposable.create(function () { return emitor.close(); });
     };
     TraderNet.prototype.disconnect = function () {

@@ -1,5 +1,6 @@
 ///<reference path="../typings/tsd.d.ts"/>
 import traderNet = require("./trader-net");
+import utils = require("./utils");
 
 import ticketCodes = require("./enums/ticket-codes");
 import currencyCodes = require("./enums/currency-codes");
@@ -16,6 +17,7 @@ module TraderNetRx {
 	export var OrderActionTypes = orderCodes.OrderActionTypes;
 	export var SecurityType = securityTypes.SecurityType;
 	export var SecurityKind = securityTypes.SecurityKind;
+	export var getSecurity = utils.getSecurity;
 }
 
 
