@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/data-avail/da-trader-net-rx.svg?branch=master)](https://travis-ci.org/data-avail/da-trader-net-rx)
 
-Project description.
+Layer above [trader-net api](https://github.com/tradernet/tn.api)
+Exposes Rx streams. 
 
 Contains typeScript defintion files. 
 
@@ -58,7 +59,7 @@ when neccessary.
 
 ## Documentation 
 
-Generate `typedoc ./src/index.ts` 
+Generate ` typedoc ./src/**.ts ./src/**/**.ts` 
 
 To publish docs  on `github`
 ```

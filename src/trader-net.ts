@@ -80,7 +80,8 @@ export class TraderNet {
 
     /**
      * Starts recieve orders.
-     * Yoy should be subscribed on ordersStream 
+     * Yoy should be subscribed on ordersStream. 
+     * Needs to be invoked after connection (authorization)
      * return
      * IDisposable - allow stop recieve oredrs
      */
@@ -91,7 +92,8 @@ export class TraderNet {
     
     /**
      * Starts recieve portfolio changes.
-     * Yoy should be subscribed on portfolioStream 
+     * Yoy should be subscribed on portfolioStream
+     * Needs to be invoked after connection (authorization)  
      * @params
      * return
      * IDisposable - allow stop recieve portfolio changes
