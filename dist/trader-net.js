@@ -5,12 +5,15 @@ var security = require("./crypto");
 var mapper = require("./mapper");
 var TraderNet = (function () {
     function TraderNet(url) {
+        var _this = this;
         this.url = url;
         this.ws = io(this.url, { transports: ['websocket'], forceNew: true, autoConnect: false });
-        this.quotesStream = Rx.Observable.fromCallback(this.ws.on, this.ws)("q")
+        this.quotesStream = Rx.Observable.fromEventPattern(function (h) { return _this.ws.on("q", h); }, function (h) { return _this.ws.off("q", h); })
             .map(mapper.mapQuotes);
-        this.ordersStream = Rx.Observable.fromCallback(this.ws.on, this.ws)("orders")
+        this.ordersStream = Rx.Observable.fromEventPattern(function (h) { return _this.ws.on("orders", h); }, function (h) { return _this.ws.off("orders", h); })
             .map(mapper.mapOrders);
+        this.portfolioStream = Rx.Observable.fromEventPattern(function (h) { return _this.ws.on("portfolio", h); }, function (h) { return _this.ws.off("portfolio", h); })
+            .map(mapper.mapPortfolio);
     }
     TraderNet.prototype.connect = function (auth) {
         var _this = this;
@@ -32,6 +35,10 @@ var TraderNet = (function () {
     };
     TraderNet.prototype.startRecieveOrders = function () {
         var emitor = this.ws.emit('notifyOrders');
+        return Rx.Disposable.create(function () { return emitor.close(); });
+    };
+    TraderNet.prototype.startRecievePortfolio = function () {
+        var emitor = this.ws.emit('notifyPortfolio');
         return Rx.Disposable.create(function () { return emitor.close(); });
     };
     TraderNet.prototype.putOrder = function (data) {

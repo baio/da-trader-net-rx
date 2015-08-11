@@ -35,11 +35,11 @@ export function formatPutOrder(data: IPutOrderData):ITraderNetPutOrderData {
 }
 
 export function mapPortfolio(servicePortfolio:any):ITraderNetPortfolio {
-
+    var portf = servicePortfolio[0].ps; 
     return {
-        key: servicePortfolio.key,
-        accounts: servicePortfolio.acc.map(mapAccount),
-        positions: servicePortfolio.pos.map(mapPosition)
+        key: portf.key,
+        accounts: portf.acc.map(mapAccount),
+        positions: portf.pos.map(mapPosition)
     }
 }
 

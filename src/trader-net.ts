@@ -10,6 +10,7 @@ import ITraderNetAuthResult = types.ITraderNetAuthResult;
 import ITraderNetQuote = types.ITraderNetQuote;
 import IPutOrderData = types.IPutOrderData;
 import IOrder = types.IOrder;
+import ITraderNetPortfolio = types.ITraderNetPortfolio;
  
 export class TraderNet {
     
@@ -17,15 +18,19 @@ export class TraderNet {
     
     public quotesStream: Rx.Observable<ITraderNetQuote[]>; 
     public ordersStream: Rx.Observable<IOrder[]>;
+    public portfolioStream: Rx.Observable<ITraderNetPortfolio>;
 
     constructor(private url:string) {
         this.ws = io(this.url, {transports: ['websocket'], forceNew: true, autoConnect : false});        
         
-        this.quotesStream = Rx.Observable.fromCallback<any>(this.ws.on, this.ws)("q")
+        this.quotesStream = Rx.Observable.fromEventPattern<any>((h) => this.ws.on("q", h), (h) => this.ws.off("q", h))
         .map(mapper.mapQuotes);
         
-        this.ordersStream = Rx.Observable.fromCallback<any>(this.ws.on, this.ws)("orders")
-        .map(mapper.mapOrders);                
+        this.ordersStream = Rx.Observable.fromEventPattern<any>((h) => this.ws.on("orders", h), (h) => this.ws.off("orders", h))
+        .map(mapper.mapOrders);
+        
+        this.portfolioStream = Rx.Observable.fromEventPattern<any>((h) => this.ws.on("portfolio", h), (h) => this.ws.off("portfolio", h))
+        .map(mapper.mapPortfolio);
     }
 
     connect(auth:ITraderNetAuth): Rx.Observable<ITraderNetAuthResult> {
@@ -51,6 +56,12 @@ export class TraderNet {
         var emitor = this.ws.emit('notifyOrders');
         return Rx.Disposable.create(() => emitor.close());        
     }
+    
+    startRecievePortfolio() : Rx.IDisposable {        
+        var emitor = this.ws.emit('notifyPortfolio');
+        return Rx.Disposable.create(() => emitor.close());        
+    }
+
     
     putOrder(data: IPutOrderData): Rx.IDisposable {
         var emitor = this.ws.emit('putOrder', mapper.formatPutOrder(data));                

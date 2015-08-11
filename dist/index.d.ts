@@ -541,15 +541,18 @@ export function mapQuotes(serviceQuotes: any): ITraderNetQuote[];
 
 
 
+
 export class TraderNet {
     private url;
     private ws;
     quotesStream: Rx.Observable<ITraderNetQuote[]>;
     ordersStream: Rx.Observable<IOrder[]>;
+    portfolioStream: Rx.Observable<ITraderNetPortfolio>;
     constructor(url: string);
     connect(auth: ITraderNetAuth): Rx.Observable<ITraderNetAuthResult>;
     startRecieveQuotes(quotes: string[]): Rx.IDisposable;
     startRecieveOrders(): Rx.IDisposable;
+    startRecievePortfolio(): Rx.IDisposable;
     putOrder(data: IPutOrderData): Rx.IDisposable;
     disconnect(): void;
 }

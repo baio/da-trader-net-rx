@@ -23,10 +23,11 @@ function formatPutOrder(data) {
 }
 exports.formatPutOrder = formatPutOrder;
 function mapPortfolio(servicePortfolio) {
+    var portf = servicePortfolio[0].ps;
     return {
-        key: servicePortfolio.key,
-        accounts: servicePortfolio.acc.map(mapAccount),
-        positions: servicePortfolio.pos.map(mapPosition)
+        key: portf.key,
+        accounts: portf.acc.map(mapAccount),
+        positions: portf.pos.map(mapPosition)
     };
 }
 exports.mapPortfolio = mapPortfolio;

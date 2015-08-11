@@ -72,7 +72,7 @@ describe("tests traderNetRx",  () => {
 		})																																	
 	})
 	
-	it.only("put order",  (done) => {
+	it.only("put order buy / sell and wotch portfolio",  (done) => {
 		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
 		var opts : traderNetRx.ITraderNetAuth = {
 			apiKey: TRADER_NET_API_KEY,
@@ -89,18 +89,42 @@ describe("tests traderNetRx",  () => {
 		
 		tn.connect(opts).subscribe(res => {
 			console.log("connection success");
+
+			//must be activated after login
+			tn.startRecievePortfolio();						
 			tn.putOrder(order);
-			//done();
+			
 		});
 		
-		
-		tn.ordersStream.subscribe(res => {
-			console.log("order !!!", res)
+		tn.portfolioStream.skip(1).subscribe(res => {
+			expect(res).has.property("accounts");
+			expect(res).has.property("positions");
+			//expect(res.accounts).has.lengthOf(1);
+			expect(res.positions).has.lengthOf(1);
+			expect(res.positions[0]).has.property("security", 230);
+			expect(res.positions[0]).has.property("securityType", 1);
+			expect(res.positions[0]).has.property("securityKind", 1);
+			expect(res.positions[0]).has.property("price");
+			expect(res.positions[0]).has.property("quantity");
+			expect(res.positions[0]).has.property("currency", 2);
+			expect(res.positions[0]).has.property("currencyRate", 1);
+			expect(res.positions[0]).has.property("securityName", 'Сбербанк');
+			expect(res.positions[0]).has.property("securityName2", 'Sberbank');
+			expect(res.positions[0]).has.property("openPrice");
+			expect(res.positions[0]).has.property("marketPrice");
+			
+			order.action = traderNetRx.OrderActionTypes.Sell; 			
+			tn.putOrder(order);
 		});
 		
-		
-		tn.startRecieveOrders();
-		 																																						
+		tn.portfolioStream.skip(2).subscribe(res => {
+			//expect(res).has.property("accounts");
+			expect(res).has.property("positions");
+			expect(res.accounts).has.lengthOf(1);
+			expect(res.positions).has.lengthOf(0);
+			done();
+		});		
+						 																																						
 	})					
 					
 }) 
