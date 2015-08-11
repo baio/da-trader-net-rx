@@ -8,8 +8,12 @@
   },
   "typescript": {
     "definition": "./dist/index.d.ts"
+  },    
+  "config": {
+    "TRADER_NET_URL": "https://wsbeta.tradernet.ru",
+    "TRADER_NET_API_KEY": "d60d46b0442b692ffcd881ea440187ff",
+    "TRADER_NET_SEC_KEY": "438e2c862ba32a13233fc7dd7d8e15ad043656ea"
   },
-  "config": {},
   "scripts": {
     "build": "gulp build:module",
     "test": "gulp test"

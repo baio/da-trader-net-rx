@@ -37,6 +37,8 @@ Set up uri for test db
 + In `package.json` field `config.SOME_URI`
 
 Run test
+
+Test must be run on empty trader-net account (no pervious trades)
  
 `npm test`
 
