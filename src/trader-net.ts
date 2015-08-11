@@ -12,12 +12,25 @@ import IPutOrderData = types.IPutOrderData;
 import IOrder = types.IOrder;
 import ITraderNetPortfolio = types.ITraderNetPortfolio;
  
+/**
+ * Subscribe to market info.
+ * Send orders. 
+ */ 
 export class TraderNet {
     
     private ws:SocketIOClient.Socket;
-    
-    public quotesStream: Rx.Observable<ITraderNetQuote[]>; 
+   
+   /**
+    * Stream of quotes. 
+    */ 
+    public quotesStream: Rx.Observable<ITraderNetQuote[]>;
+    /**
+     * Stream of orders
+     */ 
     public ordersStream: Rx.Observable<IOrder[]>;
+    /**
+     * Stream of changes in portfolio
+     */
     public portfolioStream: Rx.Observable<ITraderNetPortfolio>;
 
     constructor(private url:string) {
@@ -34,6 +47,9 @@ export class TraderNet {
             .map(mapper.mapPortfolio);
     }
 
+    /**
+     * Connect to trdaer-net service
+     */
     connect(auth:ITraderNetAuth): Rx.Observable<ITraderNetAuthResult> {
         this.ws.connect();            
         return Rx.Observable.fromCallback(this.ws.once, this.ws)("connect")
@@ -48,27 +64,55 @@ export class TraderNet {
         });            
     }
     
+    /**
+     * Starts recieve quotes.
+     * Yoy should be subscribed on quotesStream 
+     * @params
+     * quotes
+     * Ticket name, example: SBER
+     * return
+     * IDisposable - allow stop recieve quotes
+     */
     startRecieveQuotes(quotes: string[]) : Rx.IDisposable {        
         var emitor = this.ws.emit('notifyQuotes', quotes);
         return Rx.Disposable.create(() => emitor.close());        
     }
 
+    /**
+     * Starts recieve orders.
+     * Yoy should be subscribed on ordersStream 
+     * return
+     * IDisposable - allow stop recieve oredrs
+     */
     startRecieveOrders() : Rx.IDisposable {        
         var emitor = this.ws.emit('notifyOrders');
         return Rx.Disposable.create(() => emitor.close());        
     }
     
+    /**
+     * Starts recieve portfolio changes.
+     * Yoy should be subscribed on portfolioStream 
+     * @params
+     * return
+     * IDisposable - allow stop recieve portfolio changes
+     */    
     startRecievePortfolio() : Rx.IDisposable {        
         var emitor = this.ws.emit('notifyPortfolio');
         return Rx.Disposable.create(() => emitor.close());        
     }
 
-    
+
+    /**
+     * Put order
+     */    
     putOrder(data: IPutOrderData): Rx.IDisposable {
         var emitor = this.ws.emit('putOrder', mapper.formatPutOrder(data));                
         return Rx.Disposable.create(() => emitor.close());
     }
            
+    /**
+     * Disconnect from trader-net service
+     */           
     disconnect(): void {            
         this.ws.disconnect();
         this.ws = null;

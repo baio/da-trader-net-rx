@@ -7,6 +7,14 @@ export interface ISecurity {
     lotSize: number
 }
 
+/**
+ * Get security info
+ * @params
+ * code
+ * Security code
+ * @return 
+ * Security info
+ */
 export function getSecurity(code:TicketCodes):ISecurity {
 
     var seq = SEC_LIST[TicketCodes[code]];
@@ -20,8 +28,6 @@ export function getSecurity(code:TicketCodes):ISecurity {
 }
 
 export function getSecurities():Array<ISecurity> {
-
-
     return Object.keys(SEC_LIST).map((key: string) => {return {
             ticket: TicketCodes[key],
             code: key,
@@ -29,6 +35,9 @@ export function getSecurities():Array<ISecurity> {
     }});
 }
 
+/**
+ * Get security ticket names by codes 
+ */
 export function getCodes(tickets:Array<TicketCodes|string>, sort:boolean = true):Array<string> {
     var res = typeof tickets[0] != "string" ? tickets.map(m => TicketCodes[<any>m]) : tickets;
     if (sort)
