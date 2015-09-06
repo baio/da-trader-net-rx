@@ -35,8 +35,8 @@ export function formatPutOrder(data: IPutOrderData):ITraderNetPutOrderData {
 }
 
 export function mapPortfolio(servicePortfolio:any):ITraderNetPortfolio {
-    var pos = servicePortfolio.filter(f => f.ps.pos.length > 0)[0]; 
-    var acc = servicePortfolio.filter(f => f.ps.acc.length > 0)[0];
+    var pos = servicePortfolio.filter(f => f.ps.pos && f.ps.pos.length > 0)[0]; 
+    var acc = servicePortfolio.filter(f => f.ps.acc && f.ps.acc.length > 0)[0];
     return {
         key: undefined,
         accounts: acc ? acc.ps.acc.map(mapAccount) : [],

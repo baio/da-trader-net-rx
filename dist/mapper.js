@@ -23,8 +23,8 @@ function formatPutOrder(data) {
 }
 exports.formatPutOrder = formatPutOrder;
 function mapPortfolio(servicePortfolio) {
-    var pos = servicePortfolio.filter(function (f) { return f.ps.pos.length > 0; })[0];
-    var acc = servicePortfolio.filter(function (f) { return f.ps.acc.length > 0; })[0];
+    var pos = servicePortfolio.filter(function (f) { return f.ps.pos && f.ps.pos.length > 0; })[0];
+    var acc = servicePortfolio.filter(function (f) { return f.ps.acc && f.ps.acc.length > 0; })[0];
     return {
         key: undefined,
         accounts: acc ? acc.ps.acc.map(mapAccount) : [],
