@@ -26,7 +26,7 @@ var TraderNet = (function () {
                 nonce: Date.now()
             };
             var sign = security.sign(authData, auth.securityKey);
-            return Rx.Observable.fromNodeCallback(_this.ws.emit, _this.ws)('auth', authData, sign);
+            return Rx.Observable.fromNodeCallback(_this.ws.emit, _this.ws, null)('auth', authData, sign);
         });
     };
     TraderNet.prototype.startRecieveQuotes = function (quotes) {

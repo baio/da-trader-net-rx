@@ -72,7 +72,8 @@ describe("tests traderNetRx",  () => {
 		})																																	
 	})
 	
-	it("put order buy / sell and watch portfolio",  (done) => {
+	//BRITTLE ONE, ACCOUNT SHOULD NOT HAVE ANY POSITION
+	it.skip("put order buy / sell and watch portfolio",  (done) => {
 		var tn = new traderNetRx.TraderNet(TRADER_NET_URL);
 		var opts : traderNetRx.ITraderNetAuth = {
 			apiKey: TRADER_NET_API_KEY,

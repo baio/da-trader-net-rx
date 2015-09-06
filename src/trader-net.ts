@@ -60,7 +60,7 @@ export class TraderNet {
                 nonce: Date.now()
             };
             var sign = security.sign(authData, auth.securityKey);
-            return Rx.Observable.fromNodeCallback<ITraderNetAuthResult>(this.ws.emit, this.ws)('auth', authData, sign);                 
+            return Rx.Observable.fromNodeCallback<ITraderNetAuthResult>(this.ws.emit, this.ws, null)('auth', authData, sign);                 
         });            
     }
     
