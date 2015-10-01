@@ -1,4 +1,4 @@
-
+///<reference path="../typings/tsd.d.ts"/>
 var traderNet = require("./trader-net");
 var utils = require("./utils");
 var ticketCodes = require("./enums/ticket-codes");
