@@ -1,14 +1,11 @@
 {
   "name": "da-trader-net-rx",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index.d.js",
   "directories": {
     "test": "test"
-  },
-  "typescript": {
-    "definition": "./dist/index.d.ts"
   },    
   "config": {
     "TRADER_NET_URL": "https://wsbeta.tradernet.ru",
