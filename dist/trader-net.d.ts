@@ -1,4 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
 import Rx = require("rx");
 import types = require("./types");
 import ITraderNetAuth = types.ITraderNetAuth;

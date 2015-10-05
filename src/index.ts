@@ -1,4 +1,3 @@
-///<reference path="../typings/tsd.d.ts"/>
 import traderNet = require("./trader-net");
 import utils = require("./utils");
 

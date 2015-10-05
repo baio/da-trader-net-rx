@@ -1,4 +1,3 @@
-///<reference path="../typings/tsd.d.ts"/>
 import Rx = require("rx");
 import io = require("socket.io-client");
 import security = require("./crypto");
