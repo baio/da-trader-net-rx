@@ -5,7 +5,6 @@ import currencyCodes = require("./enums/currency-codes");
 import orderCodes = require("./enums/order-codes");
 import securityTypes = require("./enums/security-types");
 declare module traderNetRx {
-    type TraderNet = traderNet.TraderNet;
     type TicketCodes = ticketCodes.TicketCodes;
     type CurrencyCodes = currencyCodes.CurrencyCodes;
     type OrderTypes = orderCodes.OrderTypes;
@@ -15,5 +14,7 @@ declare module traderNetRx {
     type SecurityType = securityTypes.SecurityType;
     type SecurityKind = securityTypes.SecurityKind;
     var getSecurity: typeof utils.getSecurity;
+    type TraderNet = traderNet.TraderNet;
+    var TraderNet: typeof traderNet.TraderNet;
 }
 export = traderNetRx;

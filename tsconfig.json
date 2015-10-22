@@ -8,8 +8,7 @@
     "removeComments": true,
     "noLib": false,
     "emitDecoratorMetadata": false,
-    "outDir": "./dist",
-    "out": ".dist/index.js"
+    "outDir": "./dist"
   },
   "files" : [  
     "typings/tsd.d.ts",

@@ -11,30 +11,6 @@
 
 /*
 {
-  "version": "0.1.0",
-  "command": "npm",
-  "windows": {
-    "command": "npm"
-  },
-  "isShellCommand": true, 
-  "tasks": [
-    {
-      "taskName": "build",
-      "isBuildCommand": true,
-	  "args": [
-		  "run-script"
-	  ],
-	  "problemMatcher": "$tsc"
-    },
-    {
-      "taskName": "test",
-      "isTestCommand": true
-    }
-  ]
-}
-*/
-/*
-{
 	"version": "0.1.0",
 	"command": "gulp",
 	"isShellCommand": true,
