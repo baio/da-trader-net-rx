@@ -5,6 +5,7 @@ import ticketCodes = require("./enums/ticket-codes");
 import currencyCodes = require("./enums/currency-codes");
 import orderCodes = require("./enums/order-codes");
 import securityTypes = require("./enums/security-types");
+import types = require("./types");
 
 module traderNetRx {
 	export type TicketCodes = ticketCodes.TicketCodes;
@@ -26,6 +27,24 @@ module traderNetRx {
 	export var getSecurity = utils.getSecurity;
 	export type TraderNet = traderNet.TraderNet;
 	export var TraderNet = traderNet.TraderNet;
+	
+	
+	export type ITraderNetAuth = types.ITraderNetAuth;
+	export type BookOrderActions = types.BookOrderActions;
+	export var BookOrderActions = types.BookOrderActions;
+	
+	export type IBookOrder = types.IBookOrder;
+	export type IPutOrderData = types.IPutOrderData;
+	export type IOrder = types.IOrder;
+	export type ITraderNetAccount = types.ITraderNetAccount;	
+	export type ITraderNetPosition = types.ITraderNetPosition;
+	export type ITraderNetPortfolio = types.ITraderNetPortfolio;
+	export type ITraderNetAuthResult = types.ITraderNetAuthResult;
+	export type IPutOrderResult = types.IPutOrderResult;
+	export type ITraderNetPutOrderData = types.ITraderNetPutOrderData;
+	export type ITraderNetQuote = types.ITraderNetQuote;
+
+
 }
 
 export = traderNetRx;
